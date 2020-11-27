@@ -1,5 +1,18 @@
-https://hocvps.com/cai-dat-vnc-server-tren-centos/
+yum install wget
+yum install unzip
+
 /etc/systemd/system/
+------------------------------
+[Service]
+Type=forking
+# Clean any existing files in /tmp/.X11-unix environment
+ExecStartPre=/bin/sh -c '/usr/bin/vncserver -kill %i > /dev/null 2>&1 || :'
+ExecStart=/usr/sbin/runuser -l root -c "/usr/bin/vncserver %i"
+PIDFile=/root/.vnc/%H%i.pid
+ExecStop=/bin/sh -c '/usr/bin/vncserver -kill %i > /dev/null 2>&1 || :'
+----------------------------------------------
+[Install]
+WantedBy=multi-user.target
 
 mysql_secure_installation
 ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock

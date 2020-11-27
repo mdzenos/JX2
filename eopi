@@ -1,14 +1,5 @@
-yum update -y
-yum install tigervnc-server -y
-vncpasswd
-cp /lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:1.service
-systemctl start vncserver@:1.service
-systemctl daemon-reload
-systemctl enable vncserver@:1.service
-vncserver :1
-yum groupinstall "GNOME Desktop" "Graphical Administration Tools"
-yum groupinstall "Server with GUI" -y
-ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+yum update
+yum install samba-winbind-clients -y
 yum groupinstall 'Development Tools' -y
 yum install libjpeg-turbo-devel libtiff-devel freetype-devel -y
 yum install vim -y
@@ -28,9 +19,22 @@ php -v
 cd /var/www/html/
 wget https://files.phpmyadmin.net/phpMyAdmin/5.0.0/phpMyAdmin-5.0.0-all-languages.zip
 unzip phpMyAdmin-5.0.0-all-languages.zip
-mv phpMyAdmin-5.0.0-all-languages admin
+mv phpMyAdmin-5.0.0-all-languages zenos
 systemctl start httpd
 systemctl enable httpd
+yum install -y epel-release
+yum install -y xrdp
+systemctl enable xrdp
+systemctl start xrdpyum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y
+yum groupinstall "Server with GUI" -y
+ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
 systemctl stop firewalld
 systemctl disable firewalld
+yum install tigervnc-server -y
+vncpasswd
+vncserver :1
+cp /lib/systemd/system/vncserver@.service  /etc/systemd/system/vncserver:1.service
+systemctl daemon-reload
+systemctl start vncserver:1
+systemctl enable vncserver:1
 reboot
