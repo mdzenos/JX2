@@ -1,0 +1,36 @@
+yum update -y
+yum install tigervnc-server -y
+vncpasswd
+cp /lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:1.service
+systemctl start vncserver@:1.service
+systemctl daemon-reload
+systemctl enable vncserver@:1.service
+vncserver :1
+yum groupinstall "GNOME Desktop" "Graphical Administration Tools"
+yum groupinstall "Server with GUI" -y
+ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+yum groupinstall 'Development Tools' -y
+yum install libjpeg-turbo-devel libtiff-devel freetype-devel -y
+yum install vim -y
+yum -y install glibc.i686
+yum -y install zlib.i686
+yum -y install libstdc++.i686
+yum -y install https://harbottle.gitlab.io/wine32/7/i386/wine32-release.rpm
+yum -y install wine.i686
+yum -y install mariadb-server
+systemctl start mariadb
+systemctl enable mariadb
+yum -y install epel-release yum-utils httpd
+yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+yum-config-manager --enable remi-php73
+yum install php php-common php-opcache php-mcrypt php-cli php-gd php-curl php-mysqlnd -y
+php -v
+cd /var/www/html/
+wget https://files.phpmyadmin.net/phpMyAdmin/5.0.0/phpMyAdmin-5.0.0-all-languages.zip
+unzip phpMyAdmin-5.0.0-all-languages.zip
+mv phpMyAdmin-5.0.0-all-languages admin
+systemctl start httpd
+systemctl enable httpd
+systemctl stop firewalld
+systemctl disable firewalld
+reboot
