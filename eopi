@@ -1,4 +1,4 @@
-yum update
+yum update -y
 yum install samba-winbind-clients -y
 yum groupinstall 'Development Tools' -y
 yum install libjpeg-turbo-devel libtiff-devel freetype-devel -y
