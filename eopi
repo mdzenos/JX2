@@ -1,8 +1,10 @@
 yum update
-yum install samba-winbind-clients -y
+yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y
+yum groupinstall "Server with GUI" -y
+ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
 yum groupinstall 'Development Tools' -y
+yum install samba-winbind-clients -y
 yum install libjpeg-turbo-devel libtiff-devel freetype-devel -y
-yum install wget -y
 yum install vim -y
 yum -y install glibc.i686
 yum -y install zlib.i686
@@ -23,12 +25,12 @@ unzip phpMyAdmin-5.0.0-all-languages.zip
 mv phpMyAdmin-5.0.0-all-languages thuong
 systemctl start httpd
 systemctl enable httpd
-yum install -y epel-release
-yum install -y xrdp
+yum install epel-release -y
+yum install xrdp tigervnc-server  -y
 systemctl enable xrdp
+systemctl enable xrdp.service
 systemctl start xrdp
-yum groupinstall -y "MATE Desktop"
+systemctl start xrdp.service
 systemctl stop firewalld
 systemctl disable firewalld
-localectl set-locale LANG=en_US.UTF-8
 reboot
