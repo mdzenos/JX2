@@ -1,6 +1,9 @@
 yum update -y
 yum install samba-winbind-clients -y
+yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y
+yum groupinstall "Server with GUI" -y
 yum groupinstall 'Development Tools' -y
+ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
 yum install libjpeg-turbo-devel libtiff-devel freetype-devel -y
 yum install vim -y
 yum -y install glibc.i686
@@ -27,9 +30,6 @@ yum install -y epel-release
 yum install -y xrdp
 systemctl enable xrdp
 systemctl start xrdp
-yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y
-yum groupinstall "Server with GUI" -y
-ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
 systemctl stop firewalld
 systemctl disable firewalld
 reboot
